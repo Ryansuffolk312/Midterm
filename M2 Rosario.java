@@ -74,7 +74,8 @@ void setup() {
      table( left, top, right, bottom );
      bounce();
      collisions();
-     show();
+     balls();
+     rodent();
      messages();
 
 }
@@ -185,7 +186,7 @@ void collisions() {
 
   
   ////Show - balls, rodent, and messages
-void show() {
+void balls() {
   fill( #FC1717 );    ellipse( rasberryX, rasberryY, 30, 30 ); ///red ball
   fill( #F8FC17 );    ellipse( augustX, augustY, 30,30 ); ////yellow ball
   fill( #1720FC );    ellipse( rasinX, rasinY, 30, 30);/////blue ball
@@ -193,7 +194,8 @@ void show() {
   fill(0);                           text("1", rasberryX, rasberryY); ///give red ball #1 
   fill(0);                           text("2", augustX, augustY);//// give yellow ball #2
   fill(0);                           text("3", rasinX, rasinY);//// give blue ball #3
-///Rodnet
+}
+void rodent() {
  fill(#AA5D29);                     ellipse(rodentX, rodentY, 60, 30);//// Rodent body
  fill(#FF55F7);                     ellipse(rodentX+20, rodentY-15, 10,20);//// Rodent left ear
  fill(#FF55F7);                     ellipse(rodentX+40, rodentY-15, 10,20);//// Rodent right ear
@@ -201,11 +203,19 @@ void show() {
  fill(#FF55F7);                     ellipse(rodentX+50, rodentY-10, 5,5);   ///// Rodent nose
  fill(0);                           ellipse(rodentX+35, rodentY-15, 5,5);  ///// Rodent eye
  stroke(#FF55F7); strokeWeight(2);  line(rodentX-30, rodentY, rodentX-50, rodentY+30); ////Rodent tail
- stroke(0);                         line( rodentX-20, rodentY+10, rodentX-30, rodentY+20);
- stroke(0);                         line( rodentX+20, rodentY+10, rodentX+30, rodentY+20);
-
-
+ stroke(0);///color Rodent legs black
+//////Rodent animation: leg movement
+if(frameCount % 30 > 15){ 
+///Rodent legs first position
+  line( rodentX-20, rodentY+10, rodentX-30, rodentY+20);
+  line(rodentX+20, rodentY+10, rodentX+30, rodentY+20);}
+///Rodent leg second position
+  else{line( rodentX-10, rodentY+10, rodentX-10, rodentY+20);} 
 }
+
+
+
+
 void messages() {
   fill(#1444A2); text( title, width/2.6, 15 ); //// fill tile with blue
   fill(#08982A); text( news, width/20, 30 ); /// fill 1st row of instruc. with green
@@ -220,4 +230,5 @@ void messages() {
 
   
   
+
 
