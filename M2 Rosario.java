@@ -10,10 +10,24 @@ float rasinX, rasinY, rasinDX, rasinDY; ////blue
 float rodentX, rodentY, rodentDX;
 ////Strings
 String title= "CST112 MIDTERM EXAM";
-String news= "Click any ball to reset it to right half of table. (r resets all.) Press w to turn off wall, and p to turn pink. Press q to exit";
-String news2= "Press the 1,2, and 3 key to reset ball with corresponding number";
+String news= "Click any ball to reset it to right half of table. Press the 1,2, and 3 key to reset ball with corresponding number, press 'q' to exit.";
+String buttonr1= "Reset everything";
+String buttonr2= "or press 'r'";
+String buttonw1= "Remove wall";
+String buttonw2= "or press 'w'";
+String buttonp1= "Turn pink";
+String buttonp2= "or press 'p'";
+String buttonm1= "Furry suprise";
+String buttonm2= "or press 'm'";
 String news3= "Press m for a little furry suprise"; 
 String author="Ryan Rosario";
+////button 
+float brx1=40, brx2=180; ////reset button
+float bwx1= 185, bwx2=320; ////wall button
+float bpx1= 325, bpx2=465; ////pink button
+float bmx1= 470, bmx2=610;////mouse button
+
+float by1=30, by2=60;////y-coordinates same for all buttons 
 ////table
 float left, right, top, bottom;
 float middle;
@@ -71,14 +85,14 @@ void setup() {
   void draw(){
      background( 250,250,200 );
      rectMode( CORNERS );
+     showbutton();
      table( left, top, right, bottom );
      bounce();
      collisions();
      balls();
      rodent();
      messages();
-
-}
+    }
   
   ///HANDLERS: keys
   void keyPressed() {
@@ -88,16 +102,15 @@ void setup() {
     if (key == 'p') {tableRed=255; tableGreen=41; tableBlue=159;} ///fill table pink
     if (key == 'm') {rodentDX=7;} //// release Rodent
     
-    
-    
-  //change color to pink
+   
       //reset position of ball with corresponding number
     if(key == '1') { rasberryX=  random( middle,right );   rasberryY=  random( top, bottom );}
     if(key == '2') {  augustX=  random( middle,right );   augustY=  random( top, bottom );}
     if(key == '3') {  rasinX=  random( middle,right );  rasinY=  random( top, bottom );}
 }
-  ///Clicks
+////Clicks
   void mousePressed() {
+/////balls    
     if (dist( mouseX, mouseY, rasberryX, rasberryY)<30) { 
       rasberryX=  random( middle,right );   rasberryY=  random( top, bottom );}   ////reset red ball
    
@@ -105,9 +118,40 @@ void setup() {
        augustX=  random( middle,right );   augustY=  random( top, bottom );}     //// reset yellow ball
 
   if (dist( mouseX, mouseY, rasinX, rasinY)<30) {
-      rasinX=  random( middle,right );   rasinY=  random( top, bottom );}       //// reset blue ball
-}
+      rasinX=  random( middle,right );   rasinY=  random( top, bottom );}      //// reset blue ball
+
+////buttons
+   if(mouseX > brx1 && mouseX < brx2 && mouseY > by1 && mouseY < by2 ) {      //// reset table
+        reset();}
+   
+   if(mouseX > bwx1 && mouseX < bwx2 && mouseY > by1 && mouseY < by2 ) {     //// remove wall
+        wall=false;}
+   
+   if(mouseX > bpx1 && mouseX < bpx2 && mouseY > by1 && mouseY < by2 ) {     //// turn table pink
+       tableRed=255; tableGreen=41; tableBlue=159;}  
+   
+   if(mouseX > bmx1 && mouseX < bmx2 && mouseY > by1 && mouseY < by2 ) {    //// release rodent
+      rodentDX=7;}       
+        
+  }
       
+///Show - button
+ void showbutton() {
+////reset button
+   fill(0,255,0); //// fill green      
+   rect(brx1,by1,brx2,by2);
+////wall button  
+   fill(255,0,0); //// fill red
+   rect(bwx1, by1, bwx2, by2);
+////pink button   
+   fill(#FA00C4); //// fill pink
+   rect(bpx1, by1, bpx2, by2);
+////rodent button   
+   fill(#9B390B); //// fill brown
+   rect(bmx1, by1, bmx2, by2);
+ }
+
+     
   
   //Show - Table
  void table( float east, float north, float west, float south ) {
@@ -217,10 +261,23 @@ if(frameCount % 30 > 15){
 
 
 void messages() {
-  fill(#1444A2); text( title, width/2.6, 15 ); //// fill tile with blue
-  fill(#08982A); text( news, width/20, 30 ); /// fill 1st row of instruc. with green
-  fill(#F70A0A); text( news2, width/4, 42);//// fill 2nd row of instruc. with red
-  fill(#F7610A); text( news3, width/2.7, 54);//// fill 2rd row of instruc. with orange 
+  fill(#1444A2); text( title, width/2.6, 10 ); //// fill title with blue
+  fill(#08982A); text( news, width/32, 25 ); /// fill 1st row of instruc. with green
+  
+  
+  fill(0);       text( buttonr1, width/10, 42);//// 1st row of reset button instruction 
+  fill(0);       text( buttonr2, width/8, 54);////  2nd row of reset button instruction 
+  
+  fill(0);       text( buttonw1, width/3.2, 42);/// 1st row of wall button instruction
+  fill(0);       text( buttonw2, width/3.1, 54);/// 2nd row of wall button instruction
+  
+  fill(0);       text( buttonp1, width/1.9, 42);/// 1st row of pink button instruction
+  fill(0);       text( buttonp2, width/1.9, 54);/// 2nd row of pink button instruction
+  
+  fill(0);       text( buttonm1, width/1.38, 42);// 1st row of rodent button instruction
+  fill(0);       text( buttonm2, width/1.365, 54);// 2nd row of rodent button instruction
+  
+  
   fill(0);       text( author, 10, height-5 ); //// fill author name with black
   fill(0);       text(score, 590, height-5);  ////fill count with black
   
@@ -230,5 +287,6 @@ void messages() {
 
   
   
+
 
 
